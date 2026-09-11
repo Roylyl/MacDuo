@@ -1,0 +1,49 @@
+# macOS metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Swift / Xcode build output and user state
+/.build/
+/build/
+/dist/
+/DerivedData/
+/.swiftpm/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# Compiled applications, installers and release archives
+*.app/
+*.pkg
+*.dmg
+*.xcarchive/
+*.dSYM/
+*.dSYM.zip
+/MacDuo-*.zip
+
+# Local scratch files, logs and editor state
+/work/
+/tmp/
+/logs/
+*.log
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local environment and signing credentials
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.p12
+*.pfx
+*.pem
+*.key
+*.mobileprovision
+*.provisionprofile
