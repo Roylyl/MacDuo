@@ -94,3 +94,30 @@ APP_INPUT_DIR="$PWD/dist" PKG_OUTPUT_DIR="$PWD/dist" ./package.sh
 `APP_INPUT_DIR` 指定包含 `MacDuo.app` 的目录，`PKG_OUTPUT_DIR` 指定安装包输出目录。`CODE_SIGN_IDENTITY` 可指定已有证书签署应用，不会为 `.pkg` 签名，也不会执行公证。
 
 可选运行 `RUN_GPU_TESTS=1 ./test.sh` 做本机 GPU 与渲染生命周期检查。测试使用合成内容；真实桌面捕获、权限和物理开合效果仍需单独实测，不能由纯逻辑或 GPU 测试代替。源码结构与验证边界见 [源码说明.md](源码说明.md)。
+
+## 产物与仓库维护
+
+| 脚本 | 默认输出 | 用途 |
+| --- | --- | --- |
+| `test.sh` | `.build/tests/` | 可重新编译的测试可执行程序 |
+| `build.sh` | `dist/MacDuo.app` | 本机应用构建；默认 ad-hoc 签名 |
+| `package.sh` | `dist/MacDuo-<版本>.pkg`、临时 `.build/pkg.*` | 安装包与打包中间文件；临时目录由脚本退出清理 |
+
+`.build/`、`dist/`、Swift/Xcode 缓存、安装包和签名凭据均由 `.gitignore` 排除。保留 `Sources/`、`Tests/`、`Assets/`、`Info.plist`、脚本与第三方来源记录；测试源码和应用图标不是编译缓存。使用自定义输出目录时，需要另外确认该目录的忽略与归档方式。
+
+提交前从仓库根目录检查：
+
+```sh
+git status --short
+git diff --check
+git ls-files -ci --exclude-standard
+git check-ignore -v --no-index .build/tests/runtime dist/MacDuo.app/Contents/MacOS/MacDuo
+```
+
+`git ls-files -ci` 通常应无输出；新增忽略规则不会自动移除已经追踪的文件。需要重建时，先确认没有要保留的发布包，并用以下命令预览默认产物目录中的可清理文件：
+
+```sh
+git clean -ndX -- .build/ dist/
+```
+
+这条命令只预览，不删除文件。确认后可清理这两个产物目录，再依次运行 `./test.sh`、`./build.sh` 和 `./package.sh`；不要把清理范围扩大到整个仓库，以免删除本地环境或签名材料。清理与重建不会使 `.pkg` 获得安装器签名或 Apple 公证。

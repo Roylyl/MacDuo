@@ -10,10 +10,21 @@
 /dist/
 /DerivedData/
 /.swiftpm/
+ModuleCache.noindex/
+Index.noindex/
 xcuserdata/
 *.xcuserstate
 *.xccheckout
 *.xcscmblueprint
+*.swiftmodule
+*.swiftdoc
+*.swiftsourceinfo
+*.abi.json
+*.o
+*.dia
+*.profraw
+*.profdata
+*.xcresult/
 
 # Compiled applications, installers and release archives
 *.app/
@@ -41,9 +52,10 @@ xcuserdata/
 !.env.example
 !.env.sample
 !.env.template
-*.p12
-*.pfx
-*.pem
-*.key
-*.mobileprovision
-*.provisionprofile
+/*.p12
+/*.pfx
+/*.pem
+/*.key
+/*.mobileprovision
+/*.provisionprofile
+/local-signing/
